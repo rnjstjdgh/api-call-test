@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+test:
+  api:
+    url: http://localhost:8081
+    read-timeout: 30000
+    connect-timeout: 30000
