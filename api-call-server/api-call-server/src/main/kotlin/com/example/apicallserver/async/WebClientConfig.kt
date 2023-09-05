@@ -1,6 +1,5 @@
 package com.example.apicallserver.async
 
-import com.example.apicallserver.controller.WebClientTestController
 import io.netty.channel.ChannelOption
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.handler.timeout.ReadTimeoutHandler

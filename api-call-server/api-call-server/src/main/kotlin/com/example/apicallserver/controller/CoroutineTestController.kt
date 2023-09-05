@@ -24,7 +24,7 @@ class CoroutineTestController(
         println("호출전: ${LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}")
 
         val resultList = runBlocking(newFixedThreadPoolContext(1, "coroutine-thread")) {
-            listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).map {
+            (1..10).map {
                 async { feignService.testCall(sleep, it.toLong()) }
             }.awaitAll()
         }

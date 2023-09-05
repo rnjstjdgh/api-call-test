@@ -22,7 +22,7 @@ class AsyncTestController(
     ): ResponseEntity<List<String>> {
         println("호출전: ${LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}")
 
-        val resultList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).map {
+        val resultList = (1..10).map {
             CompletableFuture.supplyAsync({ feignService.testCall(sleep, it.toLong()) }, executor)
         }.map { it.get() }
 
