@@ -23,9 +23,9 @@ class WebClientAndCoroutineTestController(
     ): ResponseEntity<List<String?>> {
         println("호출전: ${LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}")
 
-        val resultList = runBlocking(newFixedThreadPoolContext(1, "coroutine-thread")) {
+        val resultList = runBlocking(Dispatchers.IO) {
             (1..10).map {
-                async { webClientCall(sleep, it) }
+                async { webClientCallWithLogic(sleep, it) }
             }.awaitAll()
         }
 
@@ -44,4 +44,20 @@ class WebClientAndCoroutineTestController(
             .awaitSingle()
     }
 
+    private suspend fun webClientCallWithLogic(
+        sleep: Long,
+        idx: Int,
+    ): String? {
+        println("logic start. Thread: ${Thread.currentThread().name}")
+        Thread.sleep(1000)
+        
+        val result = webClient.get()
+            .uri("/test/$sleep/$idx")
+            .retrieve()
+            .bodyToMono(String::class.java)
+            .awaitSingle()
+
+        println("logic end result: $result. Thread: ${Thread.currentThread().name}")
+        return result
+    }
 }
