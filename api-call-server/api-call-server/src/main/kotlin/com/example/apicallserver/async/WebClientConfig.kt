@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 class WebClientConfig {
 
     companion object {
-        val THREADS = 5
+        val THREADS = 1
         val THREADFACTORY: BasicThreadFactory = BasicThreadFactory.Builder()
             .namingPattern("HttpThread-%d")
             .daemon(true)
